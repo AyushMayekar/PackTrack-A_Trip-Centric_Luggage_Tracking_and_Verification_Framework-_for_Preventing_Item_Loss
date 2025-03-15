@@ -4,12 +4,14 @@
 # -----------------
 # Python / Django
 # -----------------
+migrations/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.db
 *.sqlite3
+db.sqlite3
 *.sqlite
 *.log
 *.env
@@ -29,7 +31,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Django Static / Media
-staticfiles/
+static/
 media/
 *.bak
 *.swp

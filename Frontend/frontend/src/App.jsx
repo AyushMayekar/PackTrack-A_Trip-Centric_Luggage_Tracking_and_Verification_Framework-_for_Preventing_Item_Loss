@@ -11,7 +11,6 @@ export default function App() {
 
 
   return (
-    <div style={{ backgroundColor: "#ffffff", minHeight: "100vh", padding: "20px", color: "#333" }}>
     <Router>
     {token && <Navbar setToken={setToken} />} 
       <Routes>
@@ -19,6 +18,5 @@ export default function App() {
         <Route path="/trip/:id" element={<TripDetails trips={trips} />} />
       </Routes>
     </Router>
-  </div>
   );
 }
