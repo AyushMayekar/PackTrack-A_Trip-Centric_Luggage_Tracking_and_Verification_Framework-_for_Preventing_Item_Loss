@@ -21,16 +21,10 @@ blacklisted_tokens_coll = db["Blacklisted_Tokens"]
 # Custom JWT Authentication for MongoDB
 class MongoDBJWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
-        auth_header = request.headers.get("Authorization")
+        token = request.COOKIES.get('access_token')
 
-        if not auth_header or not auth_header.startswith("Bearer "):
-            return None  # No authentication provided
-
-        token = auth_header.split(" ")[1]
-
-        # Check if token is blacklisted
-        if blacklisted_tokens_coll.find_one({"token": token}):
-            return None  # Token is blacklisted
+        if not token:
+            return None 
 
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
