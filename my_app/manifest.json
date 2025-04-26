@@ -1,0 +1,19 @@
+// public/manifest.json
+{
+  "name": "Trip Luggage Manager",
+  "short_name": "Trip Manager",
+  "description": "Manage your luggage for trips easily",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff4b2b",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
+
+  

@@ -1,0 +1,19 @@
+// src/components/Register.jsx
+import React, { useState } from "react";
+import * as Components from './styles';
+
+function Register({$signin}) {
+  return (
+    <Components.SignupContainer signin={$signin}>
+      <Components.Form>
+        <Components.Title>Create Account</Components.Title>
+        <Components.Input type="text" placeholder="Name" />
+        <Components.Input type="email" placeholder="Email" />
+        <Components.Input type="password" placeholder="Password" />
+        <Components.Button>Sign Up</Components.Button>
+      </Components.Form>
+    </Components.SignupContainer>
+  );
+}
+
+export default Register;
