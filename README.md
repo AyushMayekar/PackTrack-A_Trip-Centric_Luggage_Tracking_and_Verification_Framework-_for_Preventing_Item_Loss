@@ -1,7 +1,7 @@
 # Trip Luggage Manager (Under Development) 🚧
 
 Welcome to the **Trip Luggage manager** project!  
-This repository contains the source code for a Ecommerce Website.
+This repository contains the source code for a Trip Luggage Manager.
 
 ## 📌 Project Status
 
