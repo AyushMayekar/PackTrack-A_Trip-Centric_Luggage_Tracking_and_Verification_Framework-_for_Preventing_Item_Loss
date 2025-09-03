@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
+from bson import ObjectId
 from user_auth.views import MongoDBJWTAuthentication
 
 # Load environment variables
@@ -23,9 +24,16 @@ class TripListCreateView(APIView):
 
     def get(self, request):
         """ List all trips for the authenticated user """
-        trips = list(trips_collection.find({"owner": request.user.username}, {"_id": 0}))
-        trip_names = [trip['trip_name'] for trip in trips]
-        return Response(trip_names, status=200)
+        trips = list(trips_collection.find({"owner": request.user.username}, {"_id": 1, "trip_name": 1}))
+        trip_list = [
+        {
+            "id": str(trip["_id"]),
+            "name": trip["trip_name"]
+        }
+        for trip in trips
+    ]
+
+        return Response(trip_list, status=200)
 
     def post(self, request):
         """ Create a new trip with a unique name """
@@ -66,8 +74,8 @@ class LuggageListCreateView(APIView):
 
     def get(self, request):
         """ List all luggage items for a trip """
-        trip_name = request.data.get("trip_name")
-        trip = trips_collection.find_one({"owner": request.user.username, "trip_name": trip_name}, {"_id": 0})
+        trip_id = request.query_params.get("trip_id")
+        trip = trips_collection.find_one({"owner": request.user.username, "_id": ObjectId(trip_id)})
         if not trip:
             return Response({"error": "Trip not found"}, status=404)
         luggage_names = [item["luggage_name"] for item in trip.get("luggage", [])]
@@ -76,11 +84,11 @@ class LuggageListCreateView(APIView):
     def post(self, request):
         """ Add luggage to a trip (unique luggage name required) """
         luggage_name = request.data.get("luggage_name")
-        trip_name = request.data.get("trip_name")
+        trip_id = request.data.get("trip_id")
         if not luggage_name:
             return Response({"error": "Luggage name is required"}, status=400)
         
-        trip = trips_collection.find_one({"owner": request.user.username, "trip_name": trip_name})
+        trip = trips_collection.find_one({"owner": request.user.username, "_id": ObjectId(trip_id)})
         if not trip:
             return Response({"error": "Trip not found"}, status=404)
         
@@ -88,7 +96,7 @@ class LuggageListCreateView(APIView):
         if existing_luggage:
             return Response({"error": "Luggage name must be unique"}, status=400)
         
-        trips_collection.update_one({"owner": request.user.username, "trip_name": trip_name}, {"$push": {"luggage": {"luggage_name": luggage_name}}})
+        trips_collection.update_one({"owner": request.user.username, "_id": ObjectId(trip_id)}, {"$push": {"luggage": {"luggage_name": luggage_name}}})
         return Response({"message": "Luggage added successfully"}, status=201)
 
 # 🎒 Luggage Item Detail
@@ -99,9 +107,9 @@ class LuggageDetailView(APIView):
     def delete(self, request):
         """ Delete a specific luggage item """
         luggage_name = request.data.get("luggage_name")
-        trip_name = request.data.get("trip_name")
+        trip_id = request.data.get("trip_id")
         result = trips_collection.update_one(
-            {"owner": request.user.username, "trip_name": trip_name},
+            {"owner": request.user.username, "_id": ObjectId(trip_id)},
             {"$pull": {"luggage": {"luggage_name": luggage_name}}}
         )
         if result.matched_count == 0:

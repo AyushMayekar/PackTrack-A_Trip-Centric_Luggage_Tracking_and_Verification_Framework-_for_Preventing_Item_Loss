@@ -1,69 +1,81 @@
-// import axios from "axios";
+import axios from "axios";
 
-// const API_URL = "http://127.0.0.1:8000/api/";
+// Base URL for the Django backend
+const API_URL = "http://127.0.0.1:8000/"
 
-// export const login = async (credentials) => {
-//   const response = await axios.post(`${API_URL}token/`, credentials);
-//   return response.data;
-// };
+// 1️⃣ Register a new user
+export const register = async (userData) => {
+  const response = await axios.post(`${API_URL}register`, userData, {withCredentials: true,});
+  return response.data;
+};
 
-
-// export const fetchTrips = async (token) => {
-//     return axios.get(`${API_URL}trips/`, { headers: { Authorization: `Bearer ${token}` } });
-//   };
-
-// Mock Data for testing
+// 2️⃣ Login user and get authentication token
 export const login = async (credentials) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log("Mock Login API called");
-      resolve({ access: "mock-token" }); // Simulates a JWT token response
-    }, 500);
-  });
+  const response = await axios.post(`${API_URL}login`, credentials, {withCredentials: true,});
+  return response.data; 
 };
 
+// 3️⃣ Fetch user trips (Requires authentication)
 export const fetchTrips = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log("Mock Fetch Trips API called");
-      resolve({
-        data: [
-          { id: 1, name: "Ladakh Adventure", date: "2024-07-10"  },
-          { id: 2, name: "Goa Beach Trip", date: "2024-07-10" }
-        ]
-      });
-    }, 500);
+  return axios.get(`${API_URL}create_trips`, {
+    withCredentials: true, 
   });
 };
 
-export const fetchLuggageItems = async (tripId) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log(`Mock Fetch Luggage for Trip ${tripId} API called`);
-      resolve({
-        data: [
-          { id: 1, name: "White T-shirt", tripId: tripId },
-          { id: 2, name: "Blue Jeans", tripId: tripId }
-        ]
-      });
-    }, 500);
+// POST request to create a new trip
+export const createTrip = async (tripName) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}create_trips`,
+      { trip_name: tripName }, 
+      { withCredentials: true }
+    );
+    return response.data; 
+  } catch (error) {
+    console.error("❌ Error creating trip:", error.response?.data || error.message);
+    throw error.response?.data || { error: "Failed to create trip" };
+  }
+};
+
+// ✅ Delete Trip
+export const deleteTripApi = async (tripName) => {
+  try {
+    const response = await axios.delete(`${API_URL}/delete_trips`, {
+      data: { trip_name: tripName },   
+      withCredentials: true,           
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { error: "Failed to delete trip" };
+  }
+};
+
+// Fetch luggage
+export const fetchLuggage = (tripId) => {
+  return axios.get(`${API_URL}manage_luggage`, {
+    params: { trip_id: tripId },
+    withCredentials: true,
   });
 };
 
-export const mockFetchUserData = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log("Mock Fetch User Data API called");
-      resolve({
-        username: "John Doe",
-        email: "john@example.com",
-        trips: [
-          { id: 1, name: "Ladakh Adventure" },
-          { id: 2, name: "Goa Beach Trip" }
-        ]
-      });
-    }, 500);
+// Add luggage
+export const addLuggageApi = (tripId, luggageName) => {
+  return axios.post(
+    `${API_URL}manage_luggage`,
+    { trip_id: tripId, luggage_name: luggageName },
+    { withCredentials: true }
+  );
+};
+
+// Delete luggage
+export const deleteLuggageApi = (tripId, luggageName) => {
+  return axios.delete(`${API_URL}delete_luggage`, {
+    data: { trip_id: tripId, luggage_name: luggageName },
+    withCredentials: true,
   });
 };
 
-
+// Logout User
+export const logout = () => {
+  return axios.post(`${API_URL}logout`, {}, { withCredentials: true });
+};

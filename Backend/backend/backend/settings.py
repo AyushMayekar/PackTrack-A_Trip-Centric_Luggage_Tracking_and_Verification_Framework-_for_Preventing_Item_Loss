@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import os
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,26 +25,26 @@ SECRET_KEY = 'django-insecure-j+$2h6hl&#^o@kh)$)em$cs=b-t+!+mkr9ag=1@&vl65qi_t!t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'user_auth.apps.UserAuthConfig', # Registering the user_auth app
+    "corsheaders", 
+    'user_auth.apps.UserAuthConfig', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "rest_framework", # REST framework for API
-    "corsheaders", # CORS for handling CORS
-    'rest_framework_simplejwt', # Simple JWT for authentication
+    "rest_framework",
+    'rest_framework_simplejwt', 
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware", # Middleware for handling CORS
+    "corsheaders.middleware.CorsMiddleware", 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,7 +59,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # Setting up the templates directory
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,27 +127,37 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS SETTINGS AND STATIC FILES SETUP
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] 
+# Custom Settings
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Access token expires in 60 minutes
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),      # Refresh token expires in 7 days
-}
+# CORS settings
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173', 
+]
 
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
+
+
+'''ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+
+# Dev-only cookie settings
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SECURE = False  # ✅ allow cookies on HTTP
+CSRF_COOKIE_SAMESITE = None  # ✅ correct Python value (not string 'None')
+
+# REST Framework + JWT
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',  
-    ],
 }
-
-CSRF_COOKIE_SECURE = False  # Only True in production
-SESSION_COOKIE_SECURE = False  # Only True in production
-CSRF_COOKIE_HTTPONLY = True
-SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = "Lax"
+'''
