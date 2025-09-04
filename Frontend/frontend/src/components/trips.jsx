@@ -10,13 +10,14 @@ export default function Trips() {
   // Fetch existing trips on load
   useEffect(() => {
     fetchTrips()
-      .then((data) => {
-        console.log("✅ Fetched trips:", data);
+      .then((response) => {
+        console.log("✅ Fetched trips:", response);
+        const tripsArray = response.data;
 
-        if (Array.isArray(data)) {
-          setTrips(data);
+        if (Array.isArray(tripsArray)) {
+          setTrips(tripsArray);
         } else {
-          console.error("❌ Error: trips data is not an array!", data);
+          console.error("❌ Error: trips data is not an array!", tripsArray);
           setTrips([]);
         }
       })
