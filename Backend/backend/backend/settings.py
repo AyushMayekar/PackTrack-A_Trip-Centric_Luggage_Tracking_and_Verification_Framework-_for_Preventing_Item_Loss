@@ -28,8 +28,12 @@ SECRET_KEY = 'django-insecure-j+$2h6hl&#^o@kh)$)em$cs=b-t+!+mkr9ag=1@&vl65qi_t!t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "packtrack-a-trip-centric-luggage.onrender.com",
+    "packtrack21.netlify.app",
+]
 
 # Application definition
 
@@ -134,12 +138,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173', 
-]
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'https://packtrack-a-trip-centric-luggage.onrender.com', 'https://packtrack21.netlify.app']
 
 # CSRF settings
-CSRF_TRUSTED_ORIGINS = ['http://localhost:5173']
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173', 'https://packtrack-a-trip-centric-luggage.onrender.com', 'https://packtrack21.netlify.app']
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
