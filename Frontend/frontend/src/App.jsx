@@ -23,7 +23,7 @@ function AppContent () {
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/trips" element={<Trips/>} />
-        <Route path="/trip/:id" element={<TripDetails trips={trips} />} />
+        <Route path="/trip/:id/:name" element={<TripDetails />} />
       </Routes>
     </div>
   );

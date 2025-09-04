@@ -7,7 +7,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await logout(); 
+      await logout();
     } catch (err) {
       console.error("Logout failed:", err);
     }
@@ -18,17 +18,32 @@ export default function Navbar() {
     <AppBar position="static" sx={{ bgcolor: "#c3ec9fff" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Box>
-        <Button sx={{ color: "#132A13", fontWeight: 600 }} onClick={() => navigate(-1)}>Back</Button>
-        <Button sx={{ color: "#132A13", fontWeight: 600 }} onClick={() => navigate("/trips")}>Home</Button>
+          <Button sx={{ color: "#132A13", fontWeight: 600 }} onClick={() => navigate(-1)}>Back</Button>
+          <Button sx={{ color: "#132A13", fontWeight: 600 }} onClick={() => navigate("/trips")}>Home</Button>
         </Box>
 
-        {/* Logout Button */}
-        <Typography variant="h6" sx={{ color: "#132A13", fontWeight: 600, textAlign: "center"}}>The Trip Luggage Manager App</Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <img
+            src="https://res.cloudinary.com/dpuqctqfl/image/upload/v1756964347/Remove_background_project_jd0gjt.png"
+            alt="PackTrack Logo"
+            style={{ height: "40px", width: "40px" }}
+          />
+          <Typography
+            variant="h6"
+            sx={{ color: "#132A13", fontWeight: 600 }}
+          >
+            PACKTRACK
+          </Typography>
+        </Box>      
+         {/* Logout Button */}
         <Box>
-        <Button sx={{  backgroundColor: "#132A13", color: "#ECF39E",
+          <Button sx={{
+            backgroundColor: "#132A13", color: "#ECF39E",
             "&:hover": {
-              backgroundColor: "#31572C"}}} variant="contained" onClick={handleLogout}>Logout</Button>
-              </Box>
+              backgroundColor: "#31572C"
+            }
+          }} variant="contained" onClick={handleLogout}>Logout</Button>
+        </Box>
       </Toolbar>
     </AppBar>
   );

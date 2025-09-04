@@ -14,8 +14,9 @@ import {
 import { fetchLuggage, addLuggageApi, deleteLuggageApi } from "../api";
 
 export default function TripDetails({ trips }) {
-  const { id } = useParams();
+  const { id, name } = useParams();
   const tripId = id;
+  const tripName = decodeURIComponent(name);
   const [luggage, setLuggage] = useState([]);
   const [newItem, setNewItem] = useState("");
   const [checkedItems, setCheckedItems] = useState({});
@@ -79,9 +80,6 @@ export default function TripDetails({ trips }) {
       [luggageName]: !prev[luggageName],
     }));
   };
-
-  // Find trip name for heading
-  const tripName = trips?.find((t) => trips._id === tripId)?.trip_name || "Trip";
 
   return (
     <Paper

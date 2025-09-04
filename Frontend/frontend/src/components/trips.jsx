@@ -119,7 +119,7 @@ export default function Trips() {
                 justifyContent: "space-between",
               }}
             >
-              <Link to={`/trip/${trip.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+              <Link to={`/trip/${trip.id}/${encodeURIComponent(trip.name)}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <ListItemText primary={trip.name} secondary={trip.date ? `Date: ${trip.date}` : null} />
               </Link>
               <Button
