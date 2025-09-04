@@ -141,23 +141,5 @@ CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True
 
-
-'''ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
-
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
-
-# Dev-only cookie settings
-CSRF_COOKIE_HTTPONLY = False
-CSRF_COOKIE_SECURE = False  # ✅ allow cookies on HTTP
-CSRF_COOKIE_SAMESITE = None  # ✅ correct Python value (not string 'None')
-
-# REST Framework + JWT
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-}
-'''
+# CollectStatic Settings
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
