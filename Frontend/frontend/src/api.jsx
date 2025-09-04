@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL for the Django backend
-const API_URL = "http://127.0.0.1:8000/"
+const API_URL = "https://packtrack-a-trip-centric-luggage.onrender.com/"
 
 // 1️⃣ Register a new user
 export const register = async (userData) => {
