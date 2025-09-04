@@ -1,0 +1,78 @@
+.env
+.venv
+/node_modules
+# -----------------
+# Python / Django
+# -----------------
+migrations/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+db.sqlite3
+*.sqlite
+*.log
+*.env
+.env.*
+.vscode/
+.DS_Store
+
+# Ignore migrations except __init__.py
+**/migrations/*
+!**/migrations/__init__.py
+
+# Virtual Environment
+venv/
+env/
+*.egg-info/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django Static / Media
+static/
+media/
+*.bak
+*.swp
+*.swo
+
+# -----------------
+# Node.js / React
+# -----------------
+node_modules/
+dist/
+build/
+.npm/
+.next/
+.yarn/
+.yarn-cache/
+.pnp.*
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage/
+.vscode/
+
+# Ignore local env files
+*.env.local
+*.env.development
+*.env.production
+*.env.test
+
+# -----------------
+# Logs / OS Files
+# -----------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+.idea/
+
+
