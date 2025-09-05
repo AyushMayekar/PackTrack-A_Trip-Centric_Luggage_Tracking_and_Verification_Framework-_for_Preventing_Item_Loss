@@ -40,7 +40,7 @@ export const createTrip = async (tripName) => {
 // ✅ Delete Trip
 export const deleteTripApi = async (tripName) => {
   try {
-    const response = await axios.delete(`${API_URL}/delete_trips`, {
+    const response = await axios.delete(`${API_URL}delete_trips`, {
       data: { trip_name: tripName },   
       withCredentials: true,           
     });
